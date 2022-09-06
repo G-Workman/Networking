@@ -1,0 +1,96 @@
+https://net.cybbh.io/public/networking/latest/schedule.html
+
+http://10.50.20.75:8000/                    #Activity
+http://10.50.22.14:8000/                    #Practice
+https://miro.com/app/board/o9J_klSqCSY=/    #whiteboard
+
+
+1 bit   = bit/flag
+4 bits  = nibble
+8 bits  = byte
+16 bits = half word
+32 bits = word
+64 bits = very long word
+
+Base 2  = binary
+base 10 = decimal
+base 16 = hex
+base 64 = encoder (==)
+
+encapsulation = header + tail; a wrapper around data
+
+PHYSICAL LAYER RESPONSIBILITIES
+    Hardware Specifications
+    Encoding and Signaling
+    Data Transmission and Reception
+    Physical Network Design
+    
+Organizations
+    IETF - organizations that set standards
+    IANA - used for assigning Domain Names, IP's, etc.
+    IEEE - hardware standards
+	
+DATA LINK SUB-LAYERS
+	MAC (Media Access Control)
+		Act as a sublayer governing protocol
+		access to the physical medium, physical addressing, and acts as an interface between the LLC and physical layer
+		Most of the frame construction happens at this layer.
+	LLC (Logical Link Control)
+		Manages communication between devices over a single link of the network that includes error checking and data flow.
+		This layer provides the Ethertype to the MAC sublayer in the frame construction to identify the encapsulated protocol.
+	Type 2 Frame
+		Header
+			First 6 bytes - DMAC
+			Next 6 bytes - SMAC
+			Last 2 bytes - ethertype
+				Common Ethertypes controlled by IANA.org:
+					0x0800 - IPv4
+					0x0806 - ARP
+					0x86DD - IPv6
+					0x8100 - VLAN Tagging 802.1q
+	802.1Q Header
+		MAC Header (12 byte field)
+			First 6 bytes - DMAC
+			Next 6 bytes - SMAC
+		VLAN Tag (4 byte field)
+			Tag Protocol ID (2 byte field)
+				Initial 2 bytes contain the new effective Ethertype field of 0x8100 indicating tagging
+			Tag Control Information (2 byte field)
+				Priority Code Point (3 bits)
+				Drop Eligible Indicator (1 bit)
+		VLAN ID (12 bit field)
+	Ethertype (2 byte field)
+		Used to indicate the next protocol encapsulated in the frame.
+	
+	ARP Header
+		ARP 
+			To resolve the L2 (MAC) address when only the L3 (IPv4) address is known.
+		RARP 
+			To resolve the L3 (IPv4) address when only the L2 (MAC) is known.
+			(This protocol has been deprecated since the widespread use of protocols like BOOTP and DHCP.)
+
+		Proxy ARP - A device (router) answers the ARP queries for IP address that is on a different network.
+					The ARP proxy see the ARP request and determines that the target Network address is not on the local network segment and
+						is aware of how to reach the destination network.
+					The proxy will offer its own MAC address in response to the request.
+					Typically this device is the network gateway and is responsible to forward traffic for other networks.
+
+		ARP Cache - Is a collection of Layer 2 to Layer 3 address mappings discovered utilizing the ARP request/response process.
+					When a host needs to send a packet both the L2 and L3 addresses are needed.
+					The host will look in this table to determine if it already knows both the L2 and L3 addresses.
+					If the target is not in the table then a ARP request is initiated.
+					The ARP cache can be populated statically but mostly its done dynamically.
+					This cache can be exploited by attackers with the aim to poison the cache with incorrect information to either perform a DoS or MitM.
+		
+Scapy
+	sudo scapy
+	a=Ether()
+	a.show()
+	a.type(<type>) 0x0800 0x8100 0x86DD 0x0806
+	
+	b=Dot1Q()		#VLAN
+	b.show()
+	
+	
+	layer 2 aleterations = sendp (MAC addressing)
+		sendp (a/b/c/d, iface="eth0")
