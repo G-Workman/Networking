@@ -50,7 +50,7 @@ Layer 6 Presentation Layer
 		It is important in transmitting multimedia such as audio, video, text etc.
 			Zip, TAR, RAR, 7zip, CAB
 Layer 7 Application Layer
-FTP:
+FTP (TCP 20/21):
 	File Transfer Protocol is a standard network protocol that is used for file transfer between a client and a server.
 	Authentication is performed via a username and password, but can also be disabled in favor of anonymous mode if the FTP server is configured for it.
 	The drawback with FTP is that all communication is clear text, including the initial authentication.
@@ -63,11 +63,137 @@ FTP:
 	PASSIVE:
 		Passive FTP sidesteps the issue of Active mode by reversing the conversation.
 		The client initiates both the command and data connections.
-SSH:
+SSH (TCP 22):
 	SSH was initially created to replace insecure rsh suite of Unix programs. The syntax and user interface is identical.
 	Capabilities were expanded to replace FTP and RCP (remote copy protocol) with SFTP and SCP respectively.
 	Server-Client Relationship
 	Connection based
 	USER + HOST keys - asymmetric
 	Session key - symmetric
+TELNET (TCP 23)
+SMTP (TCP 25)
+TACACS (TCP 49)
+HTTP (TCP 80)
+HTTPS (TCP 443)
+POP (TCP 110)
+IMAP (TCP 143)
+RDP (TCP 3389)
+DNS Query (UDP 53)
+DNS Zone Transfer (TCP 53)
+DHCP (UDP 67/68)
+TFTP (UDP 69)
+NTP (UDP 123)
+SNMP (UDP 161/162):
+	Get Request
+	Set Request
+	Get Next
+	Get Bulk
+	Response
+	Trap
+	Inform
+RADIUS (UDP 1645/1646 + 1812/1813)
+RTP (UDP 1024+)
+
+CAPTURE LIBRARY
+	What makes traffic capture possible?
+		Libpcap
+		WinPcap
+		NPCAP
+		
+	Kernel Space - Computer is doing the actions
+	User Space - actions are taken by the User
+VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVIMPORTANTVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV	
+Berkley Packet Filter (BPFs)
+	a way for filtering packets from kernel to userspace.
+	full access to packet
 	
+	tcpdump {A} [B:C] {D} {E} {F} {G}
+
+	A = Protocol (ether | arp | ip | ip6 | icmp | tcp | udp)
+	B = Header Byte offset
+	C = optional: Byte Length. Can be 1, 2 or 4 (default 1)
+	D = optional: Bitwise mask (&)
+	E = Operator (= | == | > | < | <= | >= | != | () | << | >>)
+	F = Result of Expresion
+	G = optional: Logical Operator (&& ||) to bridge expressions
+	
+	Example using tcpdump:
+		tcpdump 'ether[12:2] = 0x0800 && (tcp[2:2] != 22 && tcp[2:2] != 23)'
+		
+	To filter down to the bit(s) and not just the byte.
+		ip[0] & 0x0F > 0x05
+		
+	FILTER LOGIC - MOST EXCLUSIVE
+		All designated bit values must be set; no others can be set
+			tcp[13] = 0x11
+			--or--
+			tcp[13] & 0xFF = 0x11
+
+	FILTER LOGIC - LESS EXCLUSIVE
+		All designated bits must be set; all others may be set
+			tcp[13] & 0x11 = 0x11
+	
+	FILTER LOGIC - LEAST EXCLUSIVE
+		At least one of the designated bits must be set to not equal 0; all others may be set
+			tcp[13] & 0x11 !=0
+
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^IMPORTANT^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Wireshark Demo
+	Statistics
+		Protocol Hierarchy Statistics
+		Conversations
+			
+	TCPDUMP Demo
+		sudo tcpdump
+			'-D' views up and running interfaces
+			'-i <name of interface>' only captures on the name of interface
+			'-X' display partial hex dumps
+			'-XX' displays more of the hex dumps
+			'-w <some.pcap>' write to the specified pcap
+			'-XXvv' displays the most info of hex dumps
+			supports primitive
+				'port 22' shows only hex dumps involving port 22
+				'portrange 20-100' shows hex dumps involving specified range
+			supports logical
+				&&		and
+				||		or
+				!		not
+				<
+				<=
+				>
+				>=
+				==		compare
+				!=		not equal
+			tcpdump "(src net 10.1.0.0/24) && (dst net 10.1.0.0/24) && (! dst host 10.1.0.3)"
+
+Switching Technologies
+	SWITCH OPERATION
+	Fast Forward - Only Destination MAC
+	Fragment Free - First 64 bytes
+	Store and Forward - Entire Frame and FCS
+CAM TABLE
+	Learn - Examining the Source MAC Address
+	Forward - Examining the Destination MAC Address
+IEEE 802.1AD "Q-IN-Q"
+	0x88A8 - Standard Double Tag
+	0x9100 - Non-standard Double Tag
+SPANNING TREE PROTOCOL (STP)
+	Root decision process
+		1. Elect root Bridge
+		2. Identify the Root ports on non-root bridge
+		3. Identify the Designated port for each segment
+		4. Set alternate ports to blocking state
+	LAYER 2 DISCOVERY PROTOCOLS
+		Cisco Discovery Protocol (CDP)
+		Foundry Discovery Protocol (FDP)
+		Link Layer Discovery Protocol(LLDP)
+
+													!!!ADMINISTRATIVE DISTANCES!!!
+					https://git.cybbh.space/net/public/raw/master/modules/networking/slides/images/AD.png
+
+PORT SECURITY (Physical Hardware Security)
+	Modes
+		shutdown
+		restrict
+		protect
