@@ -49,4 +49,25 @@ Layer 6 Presentation Layer
 		The primary role of Data compression is to reduce the number of bits to be transmitted.
 		It is important in transmitting multimedia such as audio, video, text etc.
 			Zip, TAR, RAR, 7zip, CAB
-
+Layer 7 Application Layer
+FTP:
+	File Transfer Protocol is a standard network protocol that is used for file transfer between a client and a server.
+	Authentication is performed via a username and password, but can also be disabled in favor of anonymous mode if the FTP server is configured for it.
+	The drawback with FTP is that all communication is clear text, including the initial authentication.
+	ACTIVE:
+		A client initiates a connection with a server on port 21 from the client’s ephemeral high port. 
+		The three way handshake is completed and the client listens on it’s ephemeral high port + 1, 
+		the client sends the port N+1 command to the server on port 21 (control port). 
+		Ex: if the command to the server is from ephemeral port 1026, it would listen on port 1027. 
+		the server initiates a connection to the client’s ephemeral high (1027) from the server’s data port (20) and the data is transferred.
+	PASSIVE:
+		Passive FTP sidesteps the issue of Active mode by reversing the conversation.
+		The client initiates both the command and data connections.
+SSH:
+	SSH was initially created to replace insecure rsh suite of Unix programs. The syntax and user interface is identical.
+	Capabilities were expanded to replace FTP and RCP (remote copy protocol) with SFTP and SCP respectively.
+	Server-Client Relationship
+	Connection based
+	USER + HOST keys - asymmetric
+	Session key - symmetric
+	
