@@ -1,0 +1,52 @@
+Layer 3 - IP + IPv6
+	The network layer receives the segment and creates a packet by encapsulating the TCP header and data payload in an IP header.
+	The correct IP information is added to the header for the destination IP address.
+	The packet is then passed down to the Data-Link layer.
+Layer 4 - TCP/UDP
+	is responsible for the transfer of data, ensuring that data is error-free and in order.
+	Transport layer communication falls under two categories:
+		Connection-oriented (TCP-Segments-Unicast traffic)
+			requires that a connection with specific agreed-upon parameters be established before data is sent.
+			provides segmentation and sequencing.
+			provides connection establishment and acknowledgments.
+			provides flow control (or windowing).
+			Identify common application layer protocols or functions that rely on TCP.
+			Get more information in RFC 793
+	Connection-less (UDP-Datagrams-Broadcast, Multicast, Unicast Traffic)
+		requires no connection before data is sent
+		provides no ordering, duplicate protection or delivery guarantee
+		does provide integrity checking
+		Identify common application layer protocols or functions that rely on UDP
+Layer 5 Session Layer
+	Session Layer — The main purpose of this layer is to maintain the state of your ongoing connections.
+		This state is not used in a connection-less protocol.
+		This layer provides the capabilities to open, close and manage sessions between the application layer processes.
+		The communication at this layer consist of requests and responses that occur between the local and remote applications.
+		Session-layer makes use of remote procedure calls (RPCs), Net-Beui, SOCKS, SMB, WINS, named-pipes, PPTP and other protocols.
+	Socks 4/5
+		Initiates connections through a proxy
+		Uses various Client / Server exchange messages
+		Client can provide authentication to server
+		Client can request connections from server
+	Allowed devices to establish connections to other devices on network to share files, printers and other things.
+		SMB Rides over Netbios - allows applications to communicate over a LAN using a NetBIOS name. Depricated due to DNS. Netbios Wiki
+		Netbios Dgram Service - UDP 138
+		Netbios Session Service - TCP 139
+Layer 6 Presentation Layer
+	Presentation Layer — This layer deals with the Translating, Formatting, Encryption, and Compression of data.
+	Translation-The presentation layer is responsible for interoperability between encoding methods as different computers use different encoding methods
+		It translates data between the formats the network requires and the format at the computer.
+		Formatting - This layer is responsible to put the file in a format that is readable. Such as:
+			ASCII or EBCDIC
+			.doc, .ppt or .xls
+			mp3 or wav
+			avi or mp4
+			bmp, jpeg, gif, tiff or png
+		Encryption This is the layer the encryption and decryption gets carried out.
+			Symetric: AES, Blowfish, Twofish, DES, and RC4
+			Asymetric: PKI, Deffie-Hellman, DSS, RSA, Elliptic curve
+		Compression Sometimes data gets to big to transmit over the network so The Presentation layer handles compression.
+		The primary role of Data compression is to reduce the number of bits to be transmitted.
+		It is important in transmitting multimedia such as audio, video, text etc.
+			Zip, TAR, RAR, 7zip, CAB
+
