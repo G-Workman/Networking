@@ -197,3 +197,25 @@ PORT SECURITY (Physical Hardware Security)
 		shutdown
 		restrict
 		protect
+0.0.0.0 Default; local router
+
+
+METRICS
+	Hop
+	Bandwidth
+	Delay
+	Load
+	MTU
+	Reliability
+	Cost
+	Policy
+	
+BGP HIJACKING
+	Illegitimate advertising of addresses
+	BGP propagates false information
+	Purpose:
+		stealing prefixes
+		monitoring traffic 
+		intercept (and possibly modify) Internet traffic
+		'black holing traffic'
+		perform MitM	
