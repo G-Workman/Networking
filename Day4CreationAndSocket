@@ -45,7 +45,7 @@ ip_check = 0        # The kernel will fill in the checksum for the packet
 ip_srcadd = socket.inet_aton(src_ip)        # inet_aton(string) will convert the IP address to a 32 bit binary number
 ip_dstadd = socket.inet_aton(dst_ip)        # inet_aton(string) will convert the IP address to a 32 bit binary number
 
-ip_header = pack('!BBHHBBH4s4s', ip_ver_ihl, ip_tos, ip_len, ip_id, ip_frag, ip_ttl, ip_proto, ip_check, ip_srcadd, ip_dstadd)
+ip_header = pack('!BBHHHBBH4s4s', ip_ver_ihl, ip_tos, ip_len, ip_id, ip_frag, ip_ttl, ip_proto, ip_check, ip_srcadd, ip_dstadd)
 
 message = b'This is a message'
 packet = ip_header + message
