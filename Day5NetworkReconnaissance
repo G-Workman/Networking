@@ -29,6 +29,7 @@ PASSIVE EXTERNAL NETWORK RECONNAISSANCE
 	DIG:
 		Typically between primary and secondary DNS servers
 		If allowed to transfer externally hostnames, IPs, and IP blocks can be determined
+		dig axfr
 	ZONE TRANSFERS:
 		Returns DNS information
 		Supplements base queries
