@@ -88,3 +88,10 @@ ps -elf			#see all things that are running
 nmap 10.10.0.40/27 -v -Pn -T5 -p 20-25,80
 			    			  -p-
 							  
+ONCE IN A ROUTER
+	show config
+	show int
+	
+Post nmap scan
+	wget -r ip:21
+	wget -r ftp://ip
