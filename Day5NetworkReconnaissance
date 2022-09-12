@@ -81,3 +81,10 @@ NETWORK SCANNING:
 CLI Ninja Ping Sweep:
 	for i in {1..254} ;do (ping -c 1 192.168.1.$i | grep "bytes from" &) ;done
 curl cht.sh/nc
+netstat -ntlp		#listening ports
+netstat -altp		#established ports
+ps -elf			#see all things that are running
+
+nmap 10.10.0.40/27 -v -Pn -T5 -p 20-25,80
+			    			  -p-
+							  
