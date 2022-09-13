@@ -1,11 +1,37 @@
 DESCRIBE COMMON METHODS FOR TRANSFERRING DATA
   TFTP
-  
+  	RFC 1350 Rev2
+	UDP transport
+	Extremely small and very simple communication
+	No terminal communication ()
+	Insecure (no authentication or encryption)
+	No directory services
+	Used often for technologies such as BOOTP and PXE
   FTP
-    Active
+  	Active
     Passive
 	2 Channels
+	RFC 959
+	TCP transport
+	Uses multiple TCP connections
+	Control Connection (21) / Data Connection (20)
+	Authentication through clear-text sign in (username and password)
+	Insecure in default configuration
+	Has directory services
+	Can be enhanced with SSL/TLS (FTPS)
+	Anonymous login
+  FTPS
+	File Transfer Protocol Secure
+	TCP transport (TCP port 443)
+	Adds SSL/TLS encryption to FTP
+	Authentication with username/password and/or PKI
+	Interactive terminal access
   SFTP
+  	TCP transport (TCP port 22)
+	Uses symmetric and asymmetric encryption
+	Adds FTP like services to SSH
+	Authentication through sign in (username and password) or with SSH key
+	Interactive terminal access
   SCP
   	1 Channel
 	
