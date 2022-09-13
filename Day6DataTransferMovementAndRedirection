@@ -165,11 +165,11 @@ TRAFFIC REDIRECTION USING TOOLS
 
 ======================================================================================================================================================
 
-mknod mypipe p																#
-nc 172.16.82.115 9876 > mypipe | nc 10.10.0.40 9999 < mypipe				#
-nc -lp 9999 > recieved4.jpg													# REPEAT FOR ANY ITERATION JUST CHANGE NAMES
-steghide extract -sf recieved4.jpg											#
-md5sum phrase4.txt															#
+mknod mypipe p																
+nc 172.16.82.115 9876 > mypipe | nc 10.10.0.40 9999 < mypipe				
+nc -lp 9999 > recieved4.jpg										# REPEAT FOR ANY ITERATION JUST CHANGE NAMES
+steghide extract -sf recieved4.jpg											
+md5sum phrase4.txt													
 
 =====================================================================================================================================================
 
