@@ -1,0 +1,11 @@
+DESCRIBE COMMON METHODS FOR TRANSFERRING DATA
+  TFTP
+  
+  FTP
+    Active
+    Passive
+	2 Channels
+  SFTP
+  SCP
+  	1 Channel
+	
