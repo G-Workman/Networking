@@ -195,9 +195,40 @@ SSH REMOTE AND LOCAL PORT FORWARDING
 
 	Also creates a local port on the localhost to connect to the previously staged connection.
 COVERT CHANNEL
-	A Covert Channel is a method of creating a capability to transfer information objects between endpoints that should not be allowed based on policy.
+	A Covert Channel is a method of creating a capability to transfer information objects between endpoints that should 
+	not be allowed based on policy
 		Strategies attackers use to avoid detection:
 			Tunnels
 			ICMP
 			DNS
 			HTTP
+======================================================================================================================================================
+
+
+1.	What is the word "localhost" associated with?
+		loopback address
+		127.0.0.1
+2.	OPS$ ssh cctc@10.50.1.150 -p 1111 			What is 1111?
+		alternate ssh port on 10.50.1.150
+3.	OPS$ ssh cctc@localhost -p 1111				What is 1111?			
+		local listening port on OPS
+4.	Which IP would we use to SSH to PC1 from OPS?		ssh cctc@__________
+		10.50.1.150
+5.	Which ssh syntax would properly setup a Dynamic tunnel to PC1?
+		ssh -D 9050 cctc@localhost -NT
+6.	Which ssh syntax would properly setup a Local tunnel to PC1 SSH port?
+		ssh cctc@10.50.1.150 -L 1111:10.50.1.150:22 -NT
+7.	Which ssh syntax would properly setup a Local tunnel to PC1 HTTP port?
+		ssh cctc@10.50.1.150 -L 1111:localhost:80 -NT
+8.	Which ssh syntax would allow us to establish a Dynamic tunnel using the Local tunnel created in Question 6?	
+		ssh -D 9050 cctc@localhost -NT
+9.	Which syntax would allow us to download the webpage of PC1 using the Local tunnel created in Question 7?
+		wget -r http://100.1.1.1:1111
+10.	Which syntax would allow us to download the webpage of PC2 using the Dynamic tunnel created in Question 8?
+		proxychains wget -r http://100.1.1.2
+11.	Which ssh syntax would properly setup a Local tunnel to PC2 SSH port using PC1 as your pivot?
+		ssh cctc@10.50.1.150 -L 1111:100.1.1.2:22 -NT
+12. Which ssh syntax would properly setup a 2nd Local tunnel to PC2 SSH port using the tunnel made in Question 6 as your first tunnel?
+		ssh -L 2222:100.1.1.2:22 cctc@localhost -p 1111 -NT
+13.	Which ssh syntax would properly setup a 2nd Local tunnel to PC2 HTTP port using the tunnel made in Question 6 as your first tunnel?
+		
