@@ -228,7 +228,6 @@ COVERT CHANNEL
 		proxychains wget -r http://100.1.1.2
 11.	Which ssh syntax would properly setup a Local tunnel to PC2 SSH port using PC1 as your pivot?
 		ssh cctc@10.50.1.150 -L 1111:100.1.1.2:22 -NT
-12. Which ssh syntax would properly setup a 2nd Local tunnel to PC2 SSH port using the tunnel made in Question 6 as your first tunnel?
+12. 	Which ssh syntax would properly setup a 2nd Local tunnel to PC2 SSH port using the tunnel made in Question 6 as your first tunnel?
 		ssh -L 2222:100.1.1.2:22 cctc@localhost -p 1111 -NT
-13.	Which ssh syntax would properly setup a 2nd Local tunnel to PC2 HTTP port using the tunnel made in Question 6 as your first tunnel?
 		
