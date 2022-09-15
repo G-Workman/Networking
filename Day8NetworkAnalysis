@@ -32,8 +32,8 @@ ANALYZE NETWORK TRAFFIC STATISTICS
 TCPDUMP
 
 tcpdump -r <name>
-					"tcp[13] = 0x12" -n | awk '{print $3}' | sort -n | uniq						#syn/ack ip's and sort them by unique number
-					"tcp[13] = 0x12" -n | awk '{print $3}' | cut -d. -f5 | sort -n | uniq		#... by port number.
+			"tcp[13] = 0x12" -n | awk '{print $3}' | sort -n | uniq				#syn/ack ip's and sort them by unique num
+			"tcp[13] = 0x12" -n | awk '{print $3}' | cut -d. -f5 | sort -n | uniq		#... by port number.
 					
 NETWORK DATA TYPES
 	Full Packet Capture Data
@@ -46,9 +46,123 @@ NETWORK DATA TYPES
 	Log Data
 DATA COLLECTION DEVICES
 	Sensors
-		In-Line			#Can controls what goes through
+		In-Line			#Can control what goes through
 		Passive			#Strictly observes
 METHODS OF DATA COLLECTION
-	TAP
-	SPAN
+	TAP				#physical/virtual
+	SPAN				#virtual
 	ARP Spoofing (MitM)
+ANOMALY DETECTION
+	Indicator of Attack (IOA)
+		Proactive
+		A series of actions that are suspicious together
+		Focus on Intent
+		Looks for what must happen
+		Code execution. persistence, lateral movement, etc.
+	Indicator of Compromise (IOC)
+		Reactive
+		Forensic Evidence
+		Provides Information that can change
+			Malware, IP addresses, exploits, signatures
+INDICATORS
+	.exe/executable files
+	NOP sled
+	Repeated Letters
+	Well Known Signatures
+	Mismatched Protocols
+	Unusual traffic
+	Large amounts of traffic/ unusual times
+POTENTIAL INDICATORS OF ATTACK
+	Destinations
+	Ports
+	Public Servers/DMZ
+	Off-Hours
+	Network Scans
+	Alarm Events
+	Malware Reinfection
+	Remote logins
+	High levels of email protocols
+	DNS queries
+POTENTIAL INDICATORS OF COMPROMISE
+	Unusual traffic outbound
+	Anomalous user login or account use
+	Size of responses for HTML
+	High number of requests for the same files
+	Using non-standard ports/ application-port mismatch
+	Writing changes to the registry/system files
+	DNS requests
+	Unexpected/ unusual patching
+	Unusual tasks
+TYPES OF MALWARE
+	Adware/Spyware
+		large amounts of traffic/ unusual traffic
+		IOA
+			Destinations
+		IOC
+			Unusual traffic outbound
+	Virus
+		phishing/ watering hole
+		IOA
+			Alarm Events, Email protocols
+		IOC
+			changes to the registry/ system files
+	Worm
+		phishing/ watering hole
+		IOA
+			Alarm events
+		IOC
+			changes to registry/ system files
+	Trojan
+		beaconing
+		IOA
+			Destinations
+		IOC
+			Unusual traffic outbound, unusual tasks, changes to registry/ system files
+	Rootkit
+		IOA
+			Malware reinfection
+		IOC
+			Anomalous user login/ account use
+	Backdoor
+		IOA
+			Remote logins
+		IOC
+			Anomalous user login/ account use
+	Botnets
+		large amounts of IPs
+			IOA
+				Destinations, remote logins
+			IOC
+				Unusual tasks, anomalous user login/ account use
+	Polymorphic and Metamorphic Malware
+		Depends on the malware type/class
+	Ransomware
+		IOA
+			Destinations, Ports, Malware reinfection
+		IOC
+			Unusual traffic outbound, non-standard ports, unusual tasks
+	Mobile Code
+		IOA
+			Depends on the malware type/class
+	Information-Stealing Worms
+		phishing/ watering hole, large amounts of traffic/ unusual traffic
+			IOA
+				Alarm events, Destinations
+			IOC
+				changes to registry/ system files, Unusual traffic outbound
+		BIOS/ Firmware Malware
+			IOA
+				Malware reinfection
+			IOC
+				Depends on the malware type/class
+				
+POTENTIAL METHODS OF DETECTION FOR IOAS AND IOCS
+	Display Filters
+	Follow Streams
+	BPFs
+	Color Coding
+	Hex Outputs
+DECODING
+	enca
+	chardet
+	iconv
