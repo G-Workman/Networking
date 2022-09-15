@@ -1,0 +1,54 @@
+======================================tcpdump -XXvv host 172.16.0.90 and !(port 2222 or port 23)========================================================
+
+FINGERPRINTING AND HOST IDENTIFICATION
+	Variances in the RFC implementation for different OS’s and systems enables the capability for fingerprinting
+	Tools used for fingerprinting and host identification can be used passively(sniffing/fingerprinting) or actively(scanning)
+P0F (PASSIVE OS FINGERPRINTING)
+	Looks at variations in initial TTL, fragmentation flag, default IP header packet length, window size, and TCP options
+	Configuration stored in:
+		/etc/p0f/p0f.fp
+NETWORK TRAFFIC SNIFFING
+	What makes traffic capture possible?
+		Libpcap
+		WinPcap (outdated)
+		NPCAP
+NETWORK TRAFFIC BASELINING
+	Snapshot of what the network looks like during a time frame
+	No industry standard
+	7 days to establish the initial snapshot
+	Prerequisite Information
+NETWORK BASELINE OBJECTIVE
+	Determines the current state of your network
+	Ascertain the current utilization of network resources
+	Identify normal vs peak network traffic time frames
+	Verify port / protocol usage
+ANALYZE NETWORK TRAFFIC STATISTICS
+	Protocol Hierarchy
+	Conversations
+	Endpoints
+	I/O Graph
+	IPv4 and IPv6 Statistics
+	Expert Information
+TCPDUMP
+
+tcpdump -r <name>
+					"tcp[13] = 0x12" -n | awk '{print $3}' | sort -n | uniq						#syn/ack ip's and sort them by unique number
+					"tcp[13] = 0x12" -n | awk '{print $3}' | cut -d. -f5 | sort -n | uniq		#... by port number.
+					
+NETWORK DATA TYPES
+	Full Packet Capture Data
+	Session Data
+		sflow
+		NetFlow
+	Statistical Data
+	Packet String Data
+	Alert Data
+	Log Data
+DATA COLLECTION DEVICES
+	Sensors
+		In-Line			#Can controls what goes through
+		Passive			#Strictly observes
+METHODS OF DATA COLLECTION
+	TAP
+	SPAN
+	ARP Spoofing (MitM)
