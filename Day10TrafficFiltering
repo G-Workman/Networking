@@ -229,3 +229,16 @@ sudo nft list chain ip CCTC output -ann
 sudo nft list ruleset -ann
 sudo nft add rule ip CCTC input position 4 ip saddr 172.16.82.112 drop
 sudo nft delete rule ip CCTC input handle 19
+
+
+
+sudo nft add rule ip CCTC input CT sate invalide drop
+  Drop INVALID packetssudo nft delete rule ip CCTC input handle 19
+ 
+sudo nft add rule ip CCTC input ip frag-off != 0 drop
+  Drop fragmented packets
+  
+sudo nft add rule ip CCTC input tcp flags sy limit rate 10/second accept
+  Limit (throttle) SYN request to prevent SYN floods
+  
+sudo nft list ruleset > nft.conf
