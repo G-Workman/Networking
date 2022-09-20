@@ -204,3 +204,28 @@ sudo iptables -I INPUT -s 172.16.82.106 -j DROP
 sudo iptables -I OUTPUT -d 172.16.82.106 -j DROP
 sudo iptables -A INPUT -s 172.16.82.112 -j ACCEPT
 sudo iptables -A OUTPUT -d 172.16.82.112 -j ACCEPT
+
+
+for CHAIN in INPUT OUTPUT FORWARD;do sudo iptables -P $CHAIN ACCEPT;done
+
+sudo iptables -A INPUT -m state --state INVALID -j DROP
+  Drop invalid fragments (not belonging to any connections)
+
+sudo iptables -A INPUT -f -j DROP
+  Drop fragments
+
+sudo iptables -A INPUT -i eth0 -p tcp --syn -m limit --limit 10/second -j ACCEPT
+  Throttle SYN requests
+
+sudo nft add table ip CCTC
+sudo nft list tables
+sudo nft flush table ip CCTC
+sudo nft delete table ip CCTC
+sudo nft add chain ip CCTC input { type filter hook input priority 0 \; policy accept \; }
+sudo nft add chain ip CCTC output { type filter hook output priority 0\; policy accept \; }
+sudo nft insert rule ip CCTC input tcp dport 22 accept
+sudo nft list ruleset
+sudo nft list chain ip CCTC output -ann
+sudo nft list ruleset -ann
+sudo nft add rule ip CCTC input position 4 ip saddr 172.16.82.112 drop
+sudo nft delete rule ip CCTC input handle 19
